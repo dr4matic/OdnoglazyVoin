@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biblioteka;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,8 @@ namespace OdnoglazyZmey
     public partial class MainForm : Form
     {
         const int size = 10;
+
+        private Snake _snake = new(new Biblioteka.Point(10, 10), 3);
 
         int XRectangle = 0;
         int YRectangle = 0;
@@ -34,10 +37,10 @@ namespace OdnoglazyZmey
         {
             switch (e.KeyCode)
             {
-                    case Keys.Down: YStep = 1; XStep = 0; break;
-                    case Keys.Up: YStep = -1; XStep = 0;break;
-                    case Keys.Left: XStep = -1;YStep = 0; break;
-                    case Keys.Right: XStep = 1; YStep = 0; break;
+                    case Keys.Down: YStep = 10; XStep = 0; break;
+                    case Keys.Up: YStep = -10; XStep = 0;break;
+                    case Keys.Left: XStep = -10;YStep = 0; break;
+                    case Keys.Right: XStep = 10; YStep = 0; break;
             }
         }
 
@@ -45,11 +48,7 @@ namespace OdnoglazyZmey
         {
             while (true)
             {
-                t -= 10;
-                if (t < 10)
-                {
-                    t = 10;
-                }
+              
                 await Task.Delay(t);
                 Refresh();
             }
@@ -59,7 +58,14 @@ namespace OdnoglazyZmey
         {
             XRectangle += XStep;
             YRectangle += YStep;
-            e.Graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(XRectangle, YRectangle, size, size));
+            _snake.Move(new (XRectangle, YRectangle));
+            var snake = _snake.Points().ToList();
+            
+            snake.ForEach(x => 
+            { 
+                e.Graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(x.X, x.Y, size, size)); 
+            });
+            
      
         }
        
