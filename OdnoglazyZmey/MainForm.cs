@@ -59,7 +59,27 @@ namespace OdnoglazyZmey
         {
             XRectangle += XStep;
             YRectangle += YStep;
-            e.Graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(XRectangle, YRectangle, size, size));          
+            e.Graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(XRectangle, YRectangle, size, size));
+            Wall();
+        }
+        private void Wall()
+        {
+            if (XRectangle < pictureBox1.Location.X)
+            {
+                XStep = 0;
+            }
+            if (XRectangle > pictureBox1.Width)
+            {
+                XStep = 0;
+            }
+            if (YRectangle < pictureBox1.Location.Y)
+            {
+                YStep = 0;
+            }
+            if (YRectangle > pictureBox1.Width)
+            {
+                YStep = 0;
+            }
         }
     }
 }
